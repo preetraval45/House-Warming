@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Dashboard | Housewarming Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <style>
+        /* --- Admin Dashboard Styles --- */
+        :root {
+            --color-gold: #D4A574;
+            --color-gold-light: #E8C9A0;
+            --color-charcoal: #2C2C2C;
+            --color-cream: #FFF8F0;
+            --color-white: #FFFFFF;
+            --color-text: #333333;
+            --color-text-light: #666666;
+            --color-success: #4CAF50;
+            --color-warning: #FF9800;
+            --color-error: #D94F4F;
+            --color-info: #2196F3;
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: #f5f5f5;
+            color: var(--color-text);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .admin-header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+        }
+
+        .admin-header a {
+            color: var(--color-gold-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .admin-header a:hover { text-decoration: underline; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            padding: 24px 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-yes .stat-value { color: var(--color-success); }
+        .stat-no .stat-value { color: var(--color-error); }
+        .stat-maybe .stat-value { color: var(--color-warning); }
+        .stat-total .stat-value { color: var(--color-info); }
+        .stat-guests .stat-value { color: var(--color-gold); }
+
+        /* Controls */
+        .controls {
+            padding: 0 32px 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 16px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus { border-color: var(--color-gold); }
+
+        .filter-select {
+            padding: 10px 16px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            background: white;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-export {
+            background: var(--color-gold);
+            color: white;
+        }
+        .btn-export:hover { background: #c49660; }
+
+        .btn-refresh {
+            background: var(--color-info);
+            color: white;
+        }
+        .btn-refresh:hover { background: #1976D2; }
+
+        .btn-delete {
+            background: var(--color-error);
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        .btn-delete:hover { background: #c0392b; }
+
+        /* Table */
+        .table-container {
+            padding: 0 32px 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        .rsvp-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            min-width: 900px;
+        }
+
+        .rsvp-table thead {
+            background: var(--color-charcoal);
+            color: white;
+        }
+
+        .rsvp-table th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .rsvp-table th:hover { background: #3d3d3d; }
+
+        .rsvp-table th .sort-icon { margin-left: 4px; font-size: 0.7rem; }
+
+        .rsvp-table td {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+
+        .rsvp-table tbody tr:hover { background: #faf8f5; }
+
+        .rsvp-table tbody tr:last-child td { border-bottom: none; }
+
+        /* Status badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-yes { background: #e8f5e9; color: #2e7d32; }
+        .badge-no { background: #ffebee; color: #c62828; }
+        .badge-maybe { background: #fff3e0; color: #e65100; }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-text-light);
+        }
+
+        .empty-state h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-charcoal);
+            margin-bottom: 8px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--color-text-light);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #eee;
+            border-top-color: var(--color-gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Message tooltip */
+        .message-preview {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .message-preview:hover {
+            white-space: normal;
+            overflow: visible;
+            background: white;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            max-width: 300px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header { padding: 16px; }
+            .stats-grid { padding: 16px; }
+            .controls { padding: 0 16px 12px; }
+            .table-container { padding: 0 16px 24px; }
+            .admin-header h1 { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .stat-card { padding: 16px; }
+            .stat-value { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div>
+            <h1>&#128203; RSVP Dashboard</h1>
+            <small>Housewarming - April 19, 2026</small>
+        </div>
+        <a href="index.html">&larr; Back to Invitation</a>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card stat-total">
+            <div class="stat-value" id="statTotal">-</div>
+            <div class="stat-label">Total RSVPs</div>
+        </div>
+        <div class="stat-card stat-yes">
+            <div class="stat-value" id="statYes">-</div>
+            <div class="stat-label">Attending</div>
+        </div>
+        <div class="stat-card stat-no">
+            <div class="stat-value" id="statNo">-</div>
+            <div class="stat-label">Declined</div>
+        </div>
+        <div class="stat-card stat-maybe">
+            <div class="stat-value" id="statMaybe">-</div>
+            <div class="stat-label">Maybe</div>
+        </div>
+        <div class="stat-card stat-guests">
+            <div class="stat-value" id="statGuests">-</div>
+            <div class="stat-label">Total Guests</div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search by name or email...">
+        <select class="filter-select" id="filterSelect">
+            <option value="all">All Responses</option>
+            <option value="yes">Attending</option>
+            <option value="no">Declined</option>
+            <option value="maybe">Maybe</option>
+        </select>
+        <button class="btn btn-refresh" id="refreshBtn" title="Refresh data">Refresh</button>
+        <button class="btn btn-export" id="exportBtn" title="Download as CSV">Export CSV</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+        <div class="loading" id="loadingState">
+            <div class="loading-spinner"></div>
+            <p>Loading RSVPs...</p>
+        </div>
+
+        <div id="tableWrapper" style="display:none;">
+            <table class="rsvp-table">
+                <thead>
+                    <tr>
+                        <th data-sort="index"># <span class="sort-icon"></span></th>
+                        <th data-sort="fullName">Name <span class="sort-icon"></span></th>
+                        <th data-sort="email">Email <span class="sort-icon"></span></th>
+                        <th data-sort="phone">Phone <span class="sort-icon"></span></th>
+                        <th data-sort="attending">Status <span class="sort-icon"></span></th>
+                        <th data-sort="adults">Adults <span class="sort-icon"></span></th>
+                        <th data-sort="children">Kids <span class="sort-icon"></span></th>
+                        <th data-sort="dietary">Dietary</th>
+                        <th data-sort="message">Message</th>
+                        <th data-sort="submittedAt">Date <span class="sort-icon"></span></th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="rsvpTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <h3>No RSVPs Yet</h3>
+            <p>When guests submit their RSVPs, they'll appear here.</p>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

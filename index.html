@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Invited! | Housewarming Celebration</title>
+    <meta name="description" content="Join us for a housewarming celebration on April 19, 2026. RSVP now!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <!-- Floating particles background -->
+    <div class="particles" id="particles" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">&#127968; The Ravals</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#details" class="nav-link">Details</a></li>
+                <li><a href="#about" class="nav-link">Our Home</a></li>
+                <li><a href="#rsvp" class="nav-link">RSVP</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle animate-fade-up">You're Warmly Invited To Our</p>
+            <h1 class="hero-title animate-fade-up delay-1">Housewarming<br>Celebration</h1>
+            <div class="hero-divider animate-fade-up delay-2">
+                <span class="divider-icon">&#127968;</span>
+            </div>
+            <p class="hero-date animate-fade-up delay-3">Saturday, April 19, 2026</p>
+
+            <!-- Countdown Timer -->
+            <div class="countdown animate-fade-up delay-4" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+
+            <a href="#rsvp" class="btn btn-primary animate-fade-up delay-5">RSVP Now</a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll Down</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Event Details Section -->
+    <section class="section details" id="details">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Celebration Details</h2>
+            <p class="section-subtitle animate-on-scroll">We'd love for you to join us as we celebrate our new home</p>
+
+            <div class="details-grid">
+                <div class="detail-card animate-on-scroll">
+                    <div class="detail-icon">&#128197;</div>
+                    <h3>Date</h3>
+                    <p>Saturday, April 19, 2026</p>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <div class="detail-icon">&#128336;</div>
+                    <h3>Time</h3>
+                    <p>4:00 PM &ndash; 9:00 PM</p>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <div class="detail-icon">&#128205;</div>
+                    <h3>Venue</h3>
+                    <p>2016 Tundra Swan Dr<br>Indian Trail, NC 28079</p>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <div class="detail-icon">&#128134;</div>
+                    <h3>Dress Code</h3>
+                    <p>Smart Casual / Festive Attire</p>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="map-container animate-on-scroll">
+                <h3 class="map-title">Find Us Here</h3>
+                <div class="map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3266.0!2d-80.65!3d35.1!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjAxNiBUdW5kcmEgU3dhbiBEciwgSW5kaWFuIFRyYWlsLCBOQyAyODA3OQ!5e0!3m2!1sen!2sus!4v1"
+                        width="100%"
+                        height="400"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Event Location Map">
+                    </iframe>
+                </div>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=2016+Tundra+Swan+Dr,+Indian+Trail,+NC+28079"
+                   class="btn btn-secondary"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Get Directions &#10132;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Welcome Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Welcome to Our New Home</h2>
+            <div class="about-content animate-on-scroll">
+                <div class="about-text">
+                    <p class="about-lead">A new chapter begins!</p>
+                    <p>
+                        We are thrilled to welcome you to our brand-new home in the beautiful
+                        Indian Trail community. After months of anticipation, we're finally ready
+                        to open our doors and share this special milestone with the people who
+                        mean the most to us &mdash; you!
+                    </p>
+                    <p>
+                        Join us for an evening filled with great food, wonderful company, and
+                        warm memories. Come take a tour of the new place, enjoy delicious home-cooked
+                        food, and help us fill this house with laughter and love.
+                    </p>
+                    <p class="about-signature">With love,<br><strong>The Raval Family</strong></p>
+                </div>
+                <div class="about-visual">
+                    <div class="home-illustration">
+                        <div class="house-icon-large">&#127968;</div>
+                        <p class="est-text">Est. 2026</p>
+                        <p class="address-text">2016 Tundra Swan Dr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What to Expect Section -->
+    <section class="section expect" id="expect">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">What to Expect</h2>
+            <p class="section-subtitle animate-on-scroll">An evening you won't forget</p>
+
+            <div class="expect-grid">
+                <div class="expect-card animate-on-scroll">
+                    <div class="expect-icon">&#127860;</div>
+                    <h3>Delicious Food</h3>
+                    <p>Enjoy a spread of home-cooked dishes, snacks, and refreshments for everyone to savor.</p>
+                </div>
+                <div class="expect-card animate-on-scroll">
+                    <div class="expect-icon">&#127911;</div>
+                    <h3>Music & Fun</h3>
+                    <p>Great music, fun conversations, and a warm atmosphere to celebrate together.</p>
+                </div>
+                <div class="expect-card animate-on-scroll">
+                    <div class="expect-icon">&#128694;</div>
+                    <h3>Home Tour</h3>
+                    <p>Get a guided tour of our new home and see how we've made it our own.</p>
+                </div>
+                <div class="expect-card animate-on-scroll">
+                    <div class="expect-icon">&#128248;</div>
+                    <h3>Photo Memories</h3>
+                    <p>Capture beautiful moments with friends and family in our new space.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="section rsvp" id="rsvp">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">RSVP</h2>
+            <p class="section-subtitle animate-on-scroll">Please let us know if you can make it by April 12, 2026</p>
+
+            <div class="rsvp-form-container animate-on-scroll">
+                <form id="rsvpForm" class="rsvp-form" novalidate>
+                    <!-- Attendance -->
+                    <div class="form-group">
+                        <label class="form-label">Will you be attending? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="attending" value="yes" required>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Joyfully Accept!</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="attending" value="no">
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Regretfully Decline</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="attending" value="maybe">
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Maybe / Not Sure Yet</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="(555) 123-4567">
+                    </div>
+
+                    <!-- Number of Guests -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adults" class="form-label">Number of Adults <span class="required">*</span></label>
+                            <select id="adults" name="adults" class="form-input" required>
+                                <option value="">Select</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="children" class="form-label">Number of Children</label>
+                            <select id="children" name="children" class="form-input">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dietary Restrictions -->
+                    <div class="form-group">
+                        <label for="dietary" class="form-label">Dietary Restrictions / Allergies</label>
+                        <input type="text" id="dietary" name="dietary" class="form-input" placeholder="e.g., Vegetarian, Nut allergy, Gluten-free">
+                    </div>
+
+                    <!-- Message -->
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message for the Family</label>
+                        <textarea id="message" name="message" class="form-input form-textarea" placeholder="Share your warm wishes or any questions..." rows="4"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                        <span class="btn-text">Send RSVP</span>
+                        <span class="btn-loading" style="display:none;">
+                            <span class="spinner"></span> Sending...
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Success Message -->
+                <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
+                    <div class="success-icon">&#10003;</div>
+                    <h3>Thank You!</h3>
+                    <p>Your RSVP has been received. We can't wait to see you!</p>
+                    <button class="btn btn-secondary" onclick="resetForm()">Submit Another RSVP</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Frequently Asked Questions</h2>
+
+            <div class="faq-list">
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What should I bring?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Just bring yourself and your lovely smile! Your presence is the best gift. However, if you'd like to bring something, a small plant or a heartfelt card would be wonderful.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Is there parking available?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! There is ample driveway parking and street parking available on Tundra Swan Dr. Please be mindful of neighboring driveways.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Are children welcome?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely! Children of all ages are welcome. Please include them in your RSVP count so we can plan accordingly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What type of food will be served?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We'll have a variety of home-cooked dishes including both vegetarian and non-vegetarian options. If you have specific dietary needs, please mention them in your RSVP.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What time should I arrive?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>The celebration begins at 4:00 PM. Feel free to arrive anytime between 4:00 PM and 5:00 PM. The party will go on until 9:00 PM.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>How do I get there?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We are located at 2016 Tundra Swan Dr, Indian Trail, NC 28079. Use the "Get Directions" button in the Details section above for GPS navigation. We're about 20 minutes from Uptown Charlotte.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>By when should I RSVP?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Please RSVP by <strong>April 12, 2026</strong> so we can prepare accordingly. However, last-minute changes are understandable &mdash; just let us know!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-home">&#127968;</div>
+                <h3>The Raval Family</h3>
+                <p>2016 Tundra Swan Dr, Indian Trail, NC 28079</p>
+                <p class="footer-date">April 19, 2026</p>
+            </div>
+            <div class="footer-bottom">
+                <p>Made with &#10084; for our housewarming celebration</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
