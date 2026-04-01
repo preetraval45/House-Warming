@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/rsvp", "destination": "/api/rsvp" },
+    { "source": "/api/admin", "destination": "/api/admin" }
+  ]
+}

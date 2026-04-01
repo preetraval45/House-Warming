@@ -3,33 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP Dashboard | Housewarming Admin</title>
+    <title>RSVP Dashboard | Griha Pravesh Admin</title>
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E0%A5%90</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-    <script src="firebase-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* --- Admin Dashboard Styles --- */
         :root {
-            --color-gold: #D4A574;
-            --color-gold-light: #E8C9A0;
-            --color-charcoal: #2C2C2C;
-            --color-cream: #FFF8F0;
+            --color-gold: #C9A84C;
+            --color-gold-light: #DFC87A;
+            --color-deep: #1B1128;
             --color-white: #FFFFFF;
-            --color-text: #333333;
-            --color-text-light: #666666;
+            --color-text: #2D2A33;
+            --color-text-light: #5C5768;
             --color-success: #4CAF50;
             --color-warning: #FF9800;
             --color-error: #D94F4F;
             --color-info: #2196F3;
-            --font-heading: 'Playfair Display', Georgia, serif;
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --shadow-sm: 0 2px 12px rgba(27, 17, 40, 0.06);
             --radius-sm: 8px;
             --radius-md: 12px;
         }
@@ -38,14 +32,13 @@
 
         body {
             font-family: var(--font-body);
-            background: #f5f5f5;
+            background: #f5f4f7;
             color: var(--color-text);
             min-height: 100vh;
         }
 
-        /* Header */
         .admin-header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: var(--color-deep);
             color: white;
             padding: 24px 32px;
             display: flex;
@@ -56,19 +49,56 @@
         }
 
         .admin-header h1 {
-            font-family: var(--font-heading);
+            font-family: var(--font-display);
             font-size: 1.5rem;
+            font-weight: 500;
         }
 
         .admin-header a {
             color: var(--color-gold-light);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
         }
 
-        .admin-header a:hover { text-decoration: underline; }
+        .admin-header a:hover { color: var(--color-gold); }
 
-        /* Stats */
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 40px;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .login-container p {
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        .login-input:focus { border-color: var(--color-gold); }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -88,17 +118,18 @@
 
         .stat-value {
             font-size: 2.5rem;
-            font-weight: 700;
-            font-family: var(--font-heading);
+            font-weight: 600;
+            font-family: var(--font-display);
             line-height: 1;
             margin-bottom: 4px;
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--color-text-light);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.1em;
+            font-weight: 500;
         }
 
         .stat-yes .stat-value { color: var(--color-success); }
@@ -107,7 +138,6 @@
         .stat-total .stat-value { color: var(--color-info); }
         .stat-guests .stat-value { color: var(--color-gold); }
 
-        /* Controls */
         .controls {
             padding: 0 32px 16px;
             max-width: 1400px;
@@ -125,9 +155,8 @@
             border: 1px solid #ddd;
             border-radius: var(--radius-sm);
             font-family: var(--font-body);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
-            transition: border-color 0.2s;
         }
 
         .search-input:focus { border-color: var(--color-gold); }
@@ -137,7 +166,7 @@
             border: 1px solid #ddd;
             border-radius: var(--radius-sm);
             font-family: var(--font-body);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             background: white;
             cursor: pointer;
             outline: none;
@@ -148,34 +177,21 @@
             border: none;
             border-radius: var(--radius-sm);
             font-family: var(--font-body);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
+            letter-spacing: 0.03em;
         }
 
-        .btn-export {
-            background: var(--color-gold);
-            color: white;
-        }
-        .btn-export:hover { background: #c49660; }
-
-        .btn-refresh {
-            background: var(--color-info);
-            color: white;
-        }
+        .btn-export { background: var(--color-gold); color: white; }
+        .btn-export:hover { background: #b8952f; }
+        .btn-refresh { background: var(--color-info); color: white; }
         .btn-refresh:hover { background: #1976D2; }
+        .btn-login { background: var(--color-gold); color: white; width: 100%; padding: 14px; font-size: 0.9rem; }
+        .btn-login:hover { background: #b8952f; }
 
-        .btn-delete {
-            background: var(--color-error);
-            color: white;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-        }
-        .btn-delete:hover { background: #c0392b; }
-
-        /* Table */
         .table-container {
             padding: 0 32px 32px;
             max-width: 1400px;
@@ -190,47 +206,35 @@
             border-radius: var(--radius-md);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
-            min-width: 900px;
+            min-width: 800px;
         }
 
-        .rsvp-table thead {
-            background: var(--color-charcoal);
-            color: white;
-        }
+        .rsvp-table thead { background: var(--color-deep); color: white; }
 
         .rsvp-table th {
             padding: 14px 16px;
             text-align: left;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            user-select: none;
+            letter-spacing: 0.08em;
             white-space: nowrap;
         }
 
-        .rsvp-table th:hover { background: #3d3d3d; }
-
-        .rsvp-table th .sort-icon { margin-left: 4px; font-size: 0.7rem; }
-
         .rsvp-table td {
             padding: 12px 16px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             border-bottom: 1px solid #f0f0f0;
             vertical-align: top;
         }
 
         .rsvp-table tbody tr:hover { background: #faf8f5; }
 
-        .rsvp-table tbody tr:last-child td { border-bottom: none; }
-
-        /* Status badges */
         .badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: capitalize;
         }
@@ -239,7 +243,26 @@
         .badge-no { background: #ffebee; color: #c62828; }
         .badge-maybe { background: #fff3e0; color: #e65100; }
 
-        /* Empty state */
+        .message-preview {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        .message-preview:hover {
+            white-space: normal;
+            overflow: visible;
+            background: white;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            max-width: 300px;
+            position: relative;
+            z-index: 10;
+        }
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -247,13 +270,12 @@
         }
 
         .empty-state h3 {
-            font-family: var(--font-heading);
+            font-family: var(--font-display);
             font-size: 1.5rem;
-            color: var(--color-charcoal);
+            color: var(--color-text);
             margin-bottom: 8px;
         }
 
-        /* Loading */
         .loading {
             text-align: center;
             padding: 40px;
@@ -273,35 +295,15 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Message tooltip */
-        .message-preview {
-            max-width: 200px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            cursor: pointer;
-            position: relative;
-        }
+        .hidden { display: none; }
 
-        .message-preview:hover {
-            white-space: normal;
-            overflow: visible;
-            background: white;
-            position: relative;
-            z-index: 10;
-            box-shadow: var(--shadow-md);
-            padding: 8px;
-            border-radius: var(--radius-sm);
-            max-width: 300px;
-        }
+        .error-msg { color: var(--color-error); font-size: 0.88rem; margin-top: 8px; }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .admin-header { padding: 16px; }
             .stats-grid { padding: 16px; }
             .controls { padding: 0 16px 12px; }
             .table-container { padding: 0 16px 24px; }
-            .admin-header h1 { font-size: 1.2rem; }
         }
 
         @media (max-width: 480px) {
@@ -312,84 +314,89 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="admin-header">
         <div>
-            <h1>&#128203; RSVP Dashboard</h1>
-            <small>Housewarming - April 19, 2026</small>
+            <h1>RSVP Dashboard</h1>
+            <small>Griha Pravesh - April 19, 2026</small>
         </div>
         <a href="index.html">&larr; Back to Invitation</a>
     </header>
 
-    <!-- Stats -->
-    <div class="stats-grid" id="statsGrid">
-        <div class="stat-card stat-total">
-            <div class="stat-value" id="statTotal">-</div>
-            <div class="stat-label">Total RSVPs</div>
-        </div>
-        <div class="stat-card stat-yes">
-            <div class="stat-value" id="statYes">-</div>
-            <div class="stat-label">Attending</div>
-        </div>
-        <div class="stat-card stat-no">
-            <div class="stat-value" id="statNo">-</div>
-            <div class="stat-label">Declined</div>
-        </div>
-        <div class="stat-card stat-maybe">
-            <div class="stat-value" id="statMaybe">-</div>
-            <div class="stat-label">Maybe</div>
-        </div>
-        <div class="stat-card stat-guests">
-            <div class="stat-value" id="statGuests">-</div>
-            <div class="stat-label">Total Guests</div>
-        </div>
+    <!-- Login -->
+    <div class="login-container" id="loginSection">
+        <h2>Admin Access</h2>
+        <p>Enter the admin secret to view RSVPs</p>
+        <input type="password" class="login-input" id="secretInput" placeholder="Admin Secret">
+        <p class="error-msg hidden" id="loginError">Invalid secret. Please try again.</p>
+        <button class="btn btn-login" id="loginBtn">View Dashboard</button>
     </div>
 
-    <!-- Controls -->
-    <div class="controls">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search by name or email...">
-        <select class="filter-select" id="filterSelect">
-            <option value="all">All Responses</option>
-            <option value="yes">Attending</option>
-            <option value="no">Declined</option>
-            <option value="maybe">Maybe</option>
-        </select>
-        <button class="btn btn-refresh" id="refreshBtn" title="Refresh data">Refresh</button>
-        <button class="btn btn-export" id="exportBtn" title="Download as CSV">Export CSV</button>
-    </div>
-
-    <!-- Table -->
-    <div class="table-container">
-        <div class="loading" id="loadingState">
-            <div class="loading-spinner"></div>
-            <p>Loading RSVPs...</p>
+    <!-- Dashboard (hidden until login) -->
+    <div id="dashboardSection" class="hidden">
+        <div class="stats-grid">
+            <div class="stat-card stat-total">
+                <div class="stat-value" id="statTotal">-</div>
+                <div class="stat-label">Total RSVPs</div>
+            </div>
+            <div class="stat-card stat-yes">
+                <div class="stat-value" id="statYes">-</div>
+                <div class="stat-label">Attending</div>
+            </div>
+            <div class="stat-card stat-no">
+                <div class="stat-value" id="statNo">-</div>
+                <div class="stat-label">Declined</div>
+            </div>
+            <div class="stat-card stat-maybe">
+                <div class="stat-value" id="statMaybe">-</div>
+                <div class="stat-label">Maybe</div>
+            </div>
+            <div class="stat-card stat-guests">
+                <div class="stat-value" id="statGuests">-</div>
+                <div class="stat-label">Total Guests</div>
+            </div>
         </div>
 
-        <div id="tableWrapper" style="display:none;">
-            <table class="rsvp-table">
-                <thead>
-                    <tr>
-                        <th data-sort="index"># <span class="sort-icon"></span></th>
-                        <th data-sort="fullName">Name <span class="sort-icon"></span></th>
-                        <th data-sort="email">Email <span class="sort-icon"></span></th>
-                        <th data-sort="phone">Phone <span class="sort-icon"></span></th>
-                        <th data-sort="attending">Status <span class="sort-icon"></span></th>
-                        <th data-sort="adults">Adults <span class="sort-icon"></span></th>
-                        <th data-sort="children">Kids <span class="sort-icon"></span></th>
-                        <th data-sort="dietary">Dietary</th>
-                        <th data-sort="message">Message</th>
-                        <th data-sort="submittedAt">Date <span class="sort-icon"></span></th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="rsvpTableBody">
-                </tbody>
-            </table>
+        <div class="controls">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search by name or email...">
+            <select class="filter-select" id="filterSelect">
+                <option value="all">All Responses</option>
+                <option value="yes">Attending</option>
+                <option value="no">Declined</option>
+                <option value="maybe">Maybe</option>
+            </select>
+            <button class="btn btn-refresh" id="refreshBtn">Refresh</button>
+            <button class="btn btn-export" id="exportBtn">Export CSV</button>
         </div>
 
-        <div class="empty-state" id="emptyState" style="display:none;">
-            <h3>No RSVPs Yet</h3>
-            <p>When guests submit their RSVPs, they'll appear here.</p>
+        <div class="table-container">
+            <div class="loading" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Loading RSVPs...</p>
+            </div>
+
+            <div id="tableWrapper" class="hidden">
+                <table class="rsvp-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Adults</th>
+                            <th>Kids</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rsvpTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="empty-state hidden" id="emptyState">
+                <h3>No RSVPs Yet</h3>
+                <p>When guests submit their RSVPs, they'll appear here.</p>
+            </div>
         </div>
     </div>
 

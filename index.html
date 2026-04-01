@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You're Invited! | Housewarming Celebration</title>
-    <meta name="description" content="Join us for a housewarming celebration on April 19, 2026. RSVP now!">
+    <title>Griha Pravesh | The Raval Family</title>
+    <meta name="description" content="Join the Raval family for a Hindu Housewarming Ceremony (Griha Pravesh) on April 19, 2026. RSVP now!">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="Griha Pravesh - The Raval Family Housewarming">
+    <meta property="og:description" content="You're warmly invited to our Griha Pravesh ceremony and housewarming celebration on Saturday, April 19, 2026 in Indian Trail, NC.">
+    <meta property="og:image" content="Graymount.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Griha Pravesh - The Raval Family Housewarming">
+    <meta name="twitter:description" content="You're warmly invited to our Griha Pravesh ceremony on April 19, 2026.">
+    <meta name="twitter:image" content="Graymount.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E0%A5%90</text></svg>">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
-    <script src="firebase-config.js"></script>
 </head>
 <body>
     <!-- Floating particles background -->
@@ -21,7 +31,11 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#home" class="nav-logo">&#127968; The Ravals</a>
+            <a href="#home" class="nav-logo">
+                <span class="logo-line"></span>
+                <span class="logo-text">Raval</span>
+                <span class="logo-line"></span>
+            </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                 <span></span>
                 <span></span>
@@ -31,20 +45,33 @@
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#details" class="nav-link">Details</a></li>
                 <li><a href="#about" class="nav-link">Our Home</a></li>
-                <li><a href="#rsvp" class="nav-link">RSVP</a></li>
-                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#rsvp" class="nav-link nav-link-cta">RSVP</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="hero-bg-image"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <p class="hero-subtitle animate-fade-up">You're Warmly Invited To Our</p>
-            <h1 class="hero-title animate-fade-up delay-1">Housewarming<br>Celebration</h1>
-            <div class="hero-divider animate-fade-up delay-2">
-                <span class="divider-icon">&#127968;</span>
+            <div class="hero-ornament animate-fade-up">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond"></span>
+                <span class="ornament-line"></span>
+            </div>
+            <p class="hero-sanskrit animate-fade-up delay-1">|| Shree Ganeshaya Namah || Jai Khambhali Ma || Jai Surapura Dada ||</p>
+            <p class="hero-sanskrit animate-fade-up delay-1">|| Namah Parvati Pataye Har Har Mahadev ||</p>
+            <p class="hero-sanskrit animate-fade-up delay-1">|| Jai Shree Ram || Jai Shree Krishna ||</p>
+            <p class="hero-subtitle animate-fade-up delay-1">You're Warmly Invited To Our</p>
+            <h1 class="hero-title animate-fade-up delay-2">
+                Griha Pravesh
+            </h1>
+            <p class="hero-title-sub animate-fade-up delay-2">Housewarming Celebration</p>
+            <div class="hero-ornament animate-fade-up delay-3">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond"></span>
+                <span class="ornament-line"></span>
             </div>
             <p class="hero-date animate-fade-up delay-3">Saturday, April 19, 2026</p>
 
@@ -54,25 +81,34 @@
                     <span class="countdown-value" id="days">00</span>
                     <span class="countdown-label">Days</span>
                 </div>
+                <div class="countdown-sep">:</div>
                 <div class="countdown-item">
                     <span class="countdown-value" id="hours">00</span>
                     <span class="countdown-label">Hours</span>
                 </div>
+                <div class="countdown-sep">:</div>
                 <div class="countdown-item">
                     <span class="countdown-value" id="minutes">00</span>
                     <span class="countdown-label">Minutes</span>
                 </div>
+                <div class="countdown-sep">:</div>
                 <div class="countdown-item">
                     <span class="countdown-value" id="seconds">00</span>
                     <span class="countdown-label">Seconds</span>
                 </div>
             </div>
 
+            <div class="hero-family animate-fade-up delay-5">
+                <p>Pratiksha &amp; Ashish Raval</p>
+                <p>Dishita Raval &middot; Preet Raval</p>
+                <p>Taraben &amp; Rajnikant Raval</p>
+            </div>
+
             <a href="#rsvp" class="btn btn-primary animate-fade-up delay-5">RSVP Now</a>
         </div>
         <div class="scroll-indicator">
-            <span>Scroll Down</span>
-            <div class="scroll-arrow"></div>
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
@@ -84,39 +120,45 @@
 
             <div class="details-grid">
                 <div class="detail-card animate-on-scroll">
-                    <div class="detail-icon">&#128197;</div>
+                    <div class="detail-icon-wrap">
+                        <svg class="detail-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><rect x="7" y="14" width="4" height="4" rx="0.5"/></svg>
+                    </div>
                     <h3>Date</h3>
                     <p>Saturday, April 19, 2026</p>
                 </div>
                 <div class="detail-card animate-on-scroll">
-                    <div class="detail-icon">&#128336;</div>
-                    <h3>Time</h3>
-                    <p>4:00 PM &ndash; 9:00 PM</p>
+                    <div class="detail-icon-wrap">
+                        <svg class="detail-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>Hindu Ritual</h3>
+                    <p>9:00 AM &ndash; 12:00 PM</p>
+                    <p class="detail-note">Griha Pravesh &amp; Vastu Puja</p>
                 </div>
                 <div class="detail-card animate-on-scroll">
-                    <div class="detail-icon">&#128205;</div>
+                    <div class="detail-icon-wrap">
+                        <svg class="detail-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                    </div>
+                    <h3>Lunch</h3>
+                    <p>Starts at 12:00 PM</p>
+                </div>
+                <div class="detail-card animate-on-scroll">
+                    <div class="detail-icon-wrap">
+                        <svg class="detail-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
                     <h3>Venue</h3>
                     <p>2016 Tundra Swan Dr<br>Indian Trail, NC 28079</p>
-                </div>
-                <div class="detail-card animate-on-scroll">
-                    <div class="detail-icon">&#128134;</div>
-                    <h3>Dress Code</h3>
-                    <p>Smart Casual / Festive Attire</p>
                 </div>
             </div>
 
             <!-- Map -->
             <div class="map-container animate-on-scroll">
-                <h3 class="map-title">Find Us Here</h3>
                 <div class="map-wrapper">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3266.0!2d-80.65!3d35.1!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjAxNiBUdW5kcmEgU3dhbiBEciwgSW5kaWFuIFRyYWlsLCBOQyAyODA3OQ!5e0!3m2!1sen!2sus!4v1"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=2016+Tundra+Swan+Dr,+Indian+Trail,+NC+28079&zoom=15"
                         width="100%"
                         height="400"
-                        style="border:0;"
                         allowfullscreen=""
                         loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
                         title="Event Location Map">
                     </iframe>
                 </div>
@@ -124,7 +166,8 @@
                    class="btn btn-secondary"
                    target="_blank"
                    rel="noopener noreferrer">
-                    Get Directions &#10132;
+                    Get Directions
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>
@@ -136,25 +179,36 @@
             <h2 class="section-title animate-on-scroll">Welcome to Our New Home</h2>
             <div class="about-content animate-on-scroll">
                 <div class="about-text">
-                    <p class="about-lead">A new chapter begins!</p>
+                    <p class="about-lead">Aavo, Padharo! &mdash; A new chapter begins!</p>
                     <p>
                         We are thrilled to welcome you to our brand-new home in the beautiful
-                        Indian Trail community. After months of anticipation, we're finally ready
-                        to open our doors and share this special milestone with the people who
-                        mean the most to us &mdash; you!
+                        Indian Trail, North Carolina community. After months of anticipation, we're
+                        finally ready to open our doors and share this special milestone with the
+                        people who mean the most to us &mdash; you!
                     </p>
                     <p>
-                        Join us for an evening filled with great food, wonderful company, and
-                        warm memories. Come take a tour of the new place, enjoy delicious home-cooked
-                        food, and help us fill this house with laughter and love.
+                        Join us as we perform the sacred <strong>Griha Pravesh</strong> and
+                        <strong>Vastu Puja</strong> ceremony in the morning, seeking blessings
+                        for our new home in the traditional Gujarati Brahmin way. The puja will be
+                        followed by a delicious lunch with wonderful company. Come be a part of
+                        this auspicious occasion and help us fill this house with blessings,
+                        laughter, and love.
                     </p>
-                    <p class="about-signature">With love,<br><strong>The Raval Family</strong></p>
+                    <div class="family-names">
+                        <p class="family-names-title">With love,</p>
+                        <p class="family-name">Pratiksha Raval &amp; Ashish Raval</p>
+                        <p class="family-name">Dishita Raval</p>
+                        <p class="family-name">Preet Raval</p>
+                        <p class="family-name">Taraben Raval &amp; Rajnikant Raval</p>
+                    </div>
                 </div>
                 <div class="about-visual">
-                    <div class="home-illustration">
-                        <div class="house-icon-large">&#127968;</div>
-                        <p class="est-text">Est. 2026</p>
-                        <p class="address-text">2016 Tundra Swan Dr</p>
+                    <div class="home-image-wrapper">
+                        <img src="Graymount.jpg" alt="Our new home at 2016 Tundra Swan Dr" class="home-photo">
+                        <div class="home-image-caption">
+                            <p class="est-text">Est. 2026</p>
+                            <p class="address-text">2016 Tundra Swan Dr</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -165,26 +219,27 @@
     <section class="section expect" id="expect">
         <div class="container">
             <h2 class="section-title animate-on-scroll">What to Expect</h2>
-            <p class="section-subtitle animate-on-scroll">An evening you won't forget</p>
+            <p class="section-subtitle animate-on-scroll">A blessed morning and a joyful afternoon</p>
 
             <div class="expect-grid">
                 <div class="expect-card animate-on-scroll">
-                    <div class="expect-icon">&#127860;</div>
-                    <h3>Delicious Food</h3>
-                    <p>Enjoy a spread of home-cooked dishes, snacks, and refreshments for everyone to savor.</p>
+                    <div class="expect-icon-wrap">
+                        <svg class="expect-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6 2 11c0 3.5 2 6.5 5 8.5V22l3-2 3 2v-2.5c3-2 5-5 5-8.5 0-5-4.48-9-6-9z"/><path d="M9 12a3 3 0 0 0 6 0"/><circle cx="12" cy="8" r="1"/></svg>
+                    </div>
+                    <h3>Griha Pravesh &amp; Vastu Puja</h3>
+                    <p>Join us for the sacred housewarming ceremony from 9:00 AM to 12:00 PM with traditional Vedic prayers, havan, and blessings.</p>
                 </div>
                 <div class="expect-card animate-on-scroll">
-                    <div class="expect-icon">&#127911;</div>
-                    <h3>Music & Fun</h3>
-                    <p>Great music, fun conversations, and a warm atmosphere to celebrate together.</p>
+                    <div class="expect-icon-wrap">
+                        <svg class="expect-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                    </div>
+                    <h3>Delicious Lunch</h3>
+                    <p>Enjoy a festive spread of home-cooked Gujarati vegetarian dishes starting at 12:00 PM.</p>
                 </div>
                 <div class="expect-card animate-on-scroll">
-                    <div class="expect-icon">&#128694;</div>
-                    <h3>Home Tour</h3>
-                    <p>Get a guided tour of our new home and see how we've made it our own.</p>
-                </div>
-                <div class="expect-card animate-on-scroll">
-                    <div class="expect-icon">&#128248;</div>
+                    <div class="expect-icon-wrap">
+                        <svg class="expect-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                    </div>
                     <h3>Photo Memories</h3>
                     <p>Capture beautiful moments with friends and family in our new space.</p>
                 </div>
@@ -194,6 +249,7 @@
 
     <!-- RSVP Section -->
     <section class="section rsvp" id="rsvp">
+        <div class="rsvp-bg"></div>
         <div class="container">
             <h2 class="section-title animate-on-scroll">RSVP</h2>
             <p class="section-subtitle animate-on-scroll">Please let us know if you can make it by April 12, 2026</p>
@@ -265,12 +321,6 @@
                         </div>
                     </div>
 
-                    <!-- Dietary Restrictions -->
-                    <div class="form-group">
-                        <label for="dietary" class="form-label">Dietary Restrictions / Allergies</label>
-                        <input type="text" id="dietary" name="dietary" class="form-input" placeholder="e.g., Vegetarian, Nut allergy, Gluten-free">
-                    </div>
-
                     <!-- Message -->
                     <div class="form-group">
                         <label for="message" class="form-label">Message for the Family</label>
@@ -279,97 +329,20 @@
 
                     <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
                         <span class="btn-text">Send RSVP</span>
-                        <span class="btn-loading" style="display:none;">
+                        <span class="btn-loading hidden">
                             <span class="spinner"></span> Sending...
                         </span>
                     </button>
                 </form>
 
                 <!-- Success Message -->
-                <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
-                    <div class="success-icon">&#10003;</div>
+                <div class="rsvp-success hidden" id="rsvpSuccess">
+                    <div class="success-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
                     <h3>Thank You!</h3>
                     <p>Your RSVP has been received. We can't wait to see you!</p>
                     <button class="btn btn-secondary" onclick="resetForm()">Submit Another RSVP</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="section faq" id="faq">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll">Frequently Asked Questions</h2>
-
-            <div class="faq-list">
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>What should I bring?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Just bring yourself and your lovely smile! Your presence is the best gift. However, if you'd like to bring something, a small plant or a heartfelt card would be wonderful.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>Is there parking available?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! There is ample driveway parking and street parking available on Tundra Swan Dr. Please be mindful of neighboring driveways.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>Are children welcome?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Absolutely! Children of all ages are welcome. Please include them in your RSVP count so we can plan accordingly.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>What type of food will be served?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We'll have a variety of home-cooked dishes including both vegetarian and non-vegetarian options. If you have specific dietary needs, please mention them in your RSVP.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>What time should I arrive?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>The celebration begins at 4:00 PM. Feel free to arrive anytime between 4:00 PM and 5:00 PM. The party will go on until 9:00 PM.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>How do I get there?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We are located at 2016 Tundra Swan Dr, Indian Trail, NC 28079. Use the "Get Directions" button in the Details section above for GPS navigation. We're about 20 minutes from Uptown Charlotte.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item animate-on-scroll">
-                    <button class="faq-question" aria-expanded="false">
-                        <span>By when should I RSVP?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Please RSVP by <strong>April 12, 2026</strong> so we can prepare accordingly. However, last-minute changes are understandable &mdash; just let us know!</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -379,13 +352,24 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-home">&#127968;</div>
+                <div class="footer-ornament">
+                    <span class="ornament-line"></span>
+                    <span class="ornament-diamond"></span>
+                    <span class="ornament-line"></span>
+                </div>
                 <h3>The Raval Family</h3>
                 <p>2016 Tundra Swan Dr, Indian Trail, NC 28079</p>
                 <p class="footer-date">April 19, 2026</p>
+                <p class="footer-tagline">Vasudhaiva Kutumbakam &mdash; The World Is One Family</p>
+                <div class="footer-contact">
+                    <p>Questions? Reach out to us</p>
+                    <a href="tel:+17044551234" class="footer-link">Call / Text</a>
+                    <span class="footer-divider">&middot;</span>
+                    <a href="mailto:raval.family@email.com" class="footer-link">Email</a>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>Made with &#10084; for our housewarming celebration</p>
+                <p>Made with love for our Griha Pravesh celebration</p>
             </div>
         </div>
     </footer>

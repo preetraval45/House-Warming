@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCountdown();
     initNavigation();
     initScrollAnimations();
-    initFAQ();
     initRSVPForm();
     initParticles();
 });
@@ -15,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
    COUNTDOWN TIMER
    ============================================= */
 function initCountdown() {
-    const eventDate = new Date('April 19, 2026 16:00:00').getTime();
+    const eventDate = new Date('April 19, 2026 09:00:00').getTime();
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -147,33 +146,6 @@ function initScrollAnimations() {
 }
 
 /* =============================================
-   FAQ ACCORDION
-   ============================================= */
-function initFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-
-        question.addEventListener('click', () => {
-            const isOpen = item.classList.contains('open');
-
-            // Close all others
-            faqItems.forEach(other => {
-                if (other !== item) {
-                    other.classList.remove('open');
-                    other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            // Toggle current
-            item.classList.toggle('open');
-            question.setAttribute('aria-expanded', !isOpen);
-        });
-    });
-}
-
-/* =============================================
    RSVP FORM
    ============================================= */
 function initRSVPForm() {
@@ -189,8 +161,8 @@ function initRSVPForm() {
         // Show loading
         const btnText = submitBtn.querySelector('.btn-text');
         const btnLoading = submitBtn.querySelector('.btn-loading');
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'inline-flex';
+        btnText.classList.add('hidden');
+        btnLoading.classList.remove('hidden');
         submitBtn.disabled = true;
 
         // Collect form data
@@ -201,35 +173,30 @@ function initRSVPForm() {
             phone: form.phone.value.trim(),
             adults: form.adults.value,
             children: form.children.value,
-            dietary: form.dietary.value.trim(),
-            message: form.message.value.trim(),
-            submittedAt: new Date().toISOString(),
-            timestamp: Date.now()
+            message: form.message.value.trim()
         };
 
         try {
-            // Save to Firebase
-            if (typeof firebase !== 'undefined' && firebase.database) {
-                const db = firebase.database();
-                await db.ref('rsvps').push(formData);
-            } else {
-                // Fallback: save to localStorage if Firebase is not configured
-                const existing = JSON.parse(localStorage.getItem('rsvps') || '[]');
-                existing.push(formData);
-                localStorage.setItem('rsvps', JSON.stringify(existing));
-                console.log('RSVP saved to localStorage (Firebase not configured)');
+            const response = await fetch('/api/rsvp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Server error');
             }
 
             // Show success
-            form.style.display = 'none';
-            document.getElementById('rsvpSuccess').style.display = 'block';
+            form.classList.add('hidden');
+            document.getElementById('rsvpSuccess').classList.remove('hidden');
 
         } catch (error) {
             console.error('Error submitting RSVP:', error);
             alert('There was an error submitting your RSVP. Please try again or contact us directly.');
         } finally {
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
+            btnText.classList.remove('hidden');
+            btnLoading.classList.add('hidden');
             submitBtn.disabled = false;
         }
     });
@@ -292,8 +259,8 @@ function resetForm() {
     const form = document.getElementById('rsvpForm');
     const success = document.getElementById('rsvpSuccess');
     form.reset();
-    form.style.display = 'block';
-    success.style.display = 'none';
+    form.classList.remove('hidden');
+    success.classList.add('hidden');
 }
 
 // Make resetForm available globally
