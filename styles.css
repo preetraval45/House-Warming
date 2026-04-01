@@ -1229,9 +1229,34 @@ select.form-input option {
 
 .rsvp-success p {
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     font-size: 1rem;
     font-weight: 300;
+}
+
+.calendar-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.btn-calendar {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-gold-light) !important;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    padding: 10px 20px;
+    font-size: 0.82rem;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+    text-transform: none;
+}
+
+.btn-calendar:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: var(--color-gold);
+    transform: translateY(-1px);
 }
 
 /* =============================================
