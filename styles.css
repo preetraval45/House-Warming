@@ -9,8 +9,8 @@
     --color-saffron-light: #F2B56B;
     --color-saffron-glow: rgba(232, 145, 58, 0.25);
     --color-kumkum: #C94040;
-    --color-gold: #C9A84C;
-    --color-gold-light: #E2CA7E;
+    --color-gold: #D4B355;
+    --color-gold-light: #F0D88A;
     --color-gold-dark: #A68A2E;
     --color-deep: #1A0F2B;
     --color-deep-mid: #261A38;
@@ -477,11 +477,12 @@ ul {
     font-size: clamp(0.85rem, 1.8vw, 1.05rem);
     font-weight: 500;
     font-style: italic;
-    color: #F7C97E;
+    color: #FFD98E;
     letter-spacing: 0.08em;
     margin-bottom: 10px;
     opacity: 1;
     line-height: 1.6;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
 }
 
 .hero-sanskrit:last-of-type {
@@ -532,7 +533,7 @@ ul {
     font-size: clamp(1.2rem, 3vw, 1.8rem);
     font-weight: 500;
     font-style: italic;
-    color: #F7C97E;
+    color: #FFD98E;
     margin-bottom: 8px;
     letter-spacing: 0.05em;
 }
@@ -551,12 +552,9 @@ ul {
 .hero-family {
     margin-bottom: 36px;
     padding: 20px 32px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(201, 168, 76, 0.12);
-    border-radius: var(--radius-md);
+    background: none;
+    border: none;
     display: inline-block;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
 }
 
 .hero-family p {
