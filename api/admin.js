@@ -13,6 +13,19 @@ export default async function handler(req, res) {
   const sql = neon(process.env.DATABASE_URL);
 
   try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS rsvps (
+        id SERIAL PRIMARY KEY,
+        attending TEXT NOT NULL,
+        full_name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        adults TEXT NOT NULL,
+        children TEXT DEFAULT '0',
+        message TEXT,
+        submitted_at TIMESTAMPTZ DEFAULT NOW()
+      )
+    `;
     const rows = await sql`SELECT * FROM rsvps ORDER BY submitted_at DESC`;
     return res.status(200).json({ rsvps: rows });
   } catch (error) {
