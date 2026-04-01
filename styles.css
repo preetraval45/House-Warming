@@ -19,9 +19,9 @@
     --color-cream-warm: #FAF0E4;
     --color-ivory: #FFFEF9;
     --color-white: #FFFFFF;
-    --color-text: #2D2A33;
-    --color-text-light: #5C5768;
-    --color-text-muted: #8E899A;
+    --color-text: #1A1720;
+    --color-text-light: #3D3648;
+    --color-text-muted: #6B6478;
     --color-error: #D94F4F;
     --color-success: #4CAF50;
     --color-border: rgba(201, 168, 76, 0.15);
@@ -73,6 +73,7 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
 }
 
 img {
@@ -748,7 +749,7 @@ ul {
     color: var(--color-text-light);
     font-size: 0.9rem;
     line-height: 1.6;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .detail-note {
@@ -820,7 +821,7 @@ ul {
     margin-bottom: 18px;
     font-size: 1rem;
     line-height: 1.85;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .family-names {
@@ -979,7 +980,7 @@ ul {
     color: var(--color-text-light);
     font-size: 0.9rem;
     line-height: 1.7;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 /* =============================================
