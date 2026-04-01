@@ -1324,9 +1324,18 @@ select.form-input option {
     font-weight: 500;
 }
 
+.footer-contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
 .footer-link {
     color: var(--color-gold) !important;
-    font-size: 0.9rem !important;
+    font-size: 0.88rem !important;
     font-weight: 500;
     transition: color var(--transition-fast);
 }
@@ -1337,7 +1346,7 @@ select.form-input option {
 
 .footer-divider {
     color: rgba(255, 255, 255, 0.2);
-    margin: 0 10px;
+    margin: 0 8px;
 }
 
 .footer-bottom {
