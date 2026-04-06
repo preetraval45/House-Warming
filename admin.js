@@ -155,6 +155,7 @@ function initControls() {
     document.getElementById('filterSelect').addEventListener('change', () => renderTable());
     document.getElementById('refreshBtn').addEventListener('click', () => loadRSVPs());
     document.getElementById('exportBtn').addEventListener('click', exportCSV);
+    document.getElementById('sheetsBtn').addEventListener('click', openInGoogleSheets);
     document.getElementById('addManualBtn').addEventListener('click', toggleManualForm);
     document.getElementById('manualForm').addEventListener('submit', submitManualRSVP);
 }
@@ -249,6 +250,36 @@ function exportCSV() {
     link.download = `griha-pravesh-accepted-${new Date().toISOString().slice(0, 10)}.csv`;
     link.click();
     URL.revokeObjectURL(url);
+}
+
+// --- OPEN IN GOOGLE SHEETS ---
+function openInGoogleSheets() {
+    const accepted = allRSVPs.filter(r => r.attending === 'yes');
+    if (accepted.length === 0) { alert('No accepted RSVPs to export.'); return; }
+
+    const headers = ['Name', 'Email', 'Phone', 'Adults', 'Children', 'Message', 'Submitted At'];
+    const rows = accepted.map(r => [
+        r.fullName || '',
+        r.email || '',
+        r.phone || '',
+        r.adults || '0',
+        r.children || '0',
+        (r.message || '').replaceAll('\n', ' '),
+        r.submittedAt ? new Date(r.submittedAt).toLocaleDateString() : ''
+    ]);
+
+    // Build the sheet data as tab-separated for Google Sheets paste
+    const allData = [headers, ...rows];
+    const tsv = allData.map(row => row.join('\t')).join('\n');
+
+    // Copy to clipboard and open blank Google Sheet
+    navigator.clipboard.writeText(tsv).then(() => {
+        alert('Data copied to clipboard! A new Google Sheet will open.\n\nPress Ctrl+V (or Cmd+V) to paste the data.');
+        window.open('https://sheets.new', '_blank');
+    }).catch(() => {
+        // Fallback: download CSV if clipboard fails
+        exportCSV();
+    });
 }
 
 function csvEscape(str) {
