@@ -51,7 +51,7 @@ async function loadRSVPs() {
         }
 
         const data = await res.json();
-        allRSVPs = (data.rsvps || []).map((r, i) => ({
+        allRSVPs = (data.rsvps || []).map(r => ({
             id: r.id,
             fullName: r.full_name,
             email: r.email,
@@ -81,8 +81,9 @@ function updateStats() {
     const declined = allRSVPs.filter(r => r.attending === 'no');
     const maybe = allRSVPs.filter(r => r.attending === 'maybe');
 
+    // Only count guests from accepted invitations
     let totalGuests = 0;
-    [...attending, ...maybe].forEach(r => {
+    attending.forEach(r => {
         totalGuests += (parseInt(r.adults) || 0) + (parseInt(r.children) || 0);
     });
 
@@ -139,12 +140,13 @@ function renderTable() {
                 <td>${escapeHtml(rsvp.children || '0')}</td>
                 <td class="message-preview" title="${escapeHtml(rsvp.message || '')}">${escapeHtml(rsvp.message || '-')}</td>
                 <td>${date}</td>
+                <td><button class="btn btn-delete" onclick="deleteRSVP(${rsvp.id})">Delete</button></td>
             </tr>
         `;
     }).join('');
 
     if (filtered.length === 0 && allRSVPs.length > 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:30px;color:#999;">No results match your search/filter.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:30px;color:#999;">No results match your search/filter.</td></tr>';
     }
 }
 
@@ -153,17 +155,86 @@ function initControls() {
     document.getElementById('filterSelect').addEventListener('change', () => renderTable());
     document.getElementById('refreshBtn').addEventListener('click', () => loadRSVPs());
     document.getElementById('exportBtn').addEventListener('click', exportCSV);
+    document.getElementById('addManualBtn').addEventListener('click', toggleManualForm);
+    document.getElementById('manualForm').addEventListener('submit', submitManualRSVP);
 }
 
-function exportCSV() {
-    if (allRSVPs.length === 0) { alert('No RSVPs to export.'); return; }
+// --- DELETE ---
+async function deleteRSVP(id) {
+    if (!confirm('Are you sure you want to delete this RSVP?')) return;
 
-    const headers = ['Name', 'Email', 'Phone', 'Attending', 'Adults', 'Children', 'Message', 'Submitted At'];
-    const rows = allRSVPs.map(r => [
+    try {
+        const res = await fetch('/api/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${adminSecret}`
+            },
+            body: JSON.stringify({ id })
+        });
+
+        if (!res.ok) throw new Error('Delete failed');
+        loadRSVPs();
+    } catch (err) {
+        alert('Error deleting RSVP. Please try again.');
+        console.error(err);
+    }
+}
+window.deleteRSVP = deleteRSVP;
+
+// --- MANUAL ENTRY ---
+function toggleManualForm() {
+    const form = document.getElementById('manualFormWrapper');
+    form.classList.toggle('hidden');
+}
+
+async function submitManualRSVP(e) {
+    e.preventDefault();
+    const form = e.target;
+
+    const formData = {
+        attending: form.attending.value,
+        fullName: form.fullName.value.trim(),
+        email: form.email.value.trim() || 'manual@admin.entry',
+        phone: form.phone.value.trim(),
+        adults: form.adults.value,
+        children: form.children.value,
+        message: form.message.value.trim()
+    };
+
+    if (!formData.fullName || !formData.adults) {
+        alert('Name and number of adults are required.');
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/rsvp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        if (!res.ok) throw new Error('Submit failed');
+
+        form.reset();
+        document.getElementById('manualFormWrapper').classList.add('hidden');
+        loadRSVPs();
+    } catch (err) {
+        alert('Error adding RSVP. Please try again.');
+        console.error(err);
+    }
+}
+
+// --- CSV EXPORT (only accepted) ---
+function exportCSV() {
+    const accepted = allRSVPs.filter(r => r.attending === 'yes');
+    if (accepted.length === 0) { alert('No accepted RSVPs to export.'); return; }
+
+    const headers = ['Name', 'Email', 'Phone', 'Adults', 'Children', 'Message', 'Submitted At'];
+    const rows = accepted.map(r => [
         csvEscape(r.fullName || ''),
         csvEscape(r.email || ''),
         csvEscape(r.phone || ''),
-        csvEscape(r.attending || ''),
         r.adults || '0',
         r.children || '0',
         csvEscape(r.message || ''),
@@ -175,7 +246,7 @@ function exportCSV() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `griha-pravesh-rsvps-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.download = `griha-pravesh-accepted-${new Date().toISOString().slice(0, 10)}.csv`;
     link.click();
     URL.revokeObjectURL(url);
 }

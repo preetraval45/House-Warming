@@ -189,8 +189,72 @@
         .btn-export:hover { background: #b8952f; }
         .btn-refresh { background: var(--color-info); color: white; }
         .btn-refresh:hover { background: #1976D2; }
+        .btn-add { background: var(--color-success); color: white; }
+        .btn-add:hover { background: #388E3C; }
+        .btn-delete { background: var(--color-error); color: white; padding: 6px 14px; font-size: 0.78rem; }
+        .btn-delete:hover { background: #c0392b; }
         .btn-login { background: var(--color-gold); color: white; width: 100%; padding: 14px; font-size: 0.9rem; }
         .btn-login:hover { background: #b8952f; }
+
+        .manual-form-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px 24px;
+        }
+
+        .manual-form {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #e0e0e0;
+        }
+
+        .manual-form h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-grid input,
+        .form-grid select,
+        .form-grid textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            outline: none;
+        }
+
+        .form-grid input:focus,
+        .form-grid select:focus,
+        .form-grid textarea:focus {
+            border-color: var(--color-gold);
+        }
+
+        .form-grid textarea {
+            grid-column: 1 / -1;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .manual-form .btn-submit {
+            background: var(--color-success);
+            color: white;
+            padding: 10px 28px;
+        }
+
+        .manual-form .btn-submit:hover { background: #388E3C; }
 
         .table-container {
             padding: 0 32px 32px;
@@ -352,7 +416,7 @@
             </div>
             <div class="stat-card stat-guests">
                 <div class="stat-value" id="statGuests">-</div>
-                <div class="stat-label">Total Guests</div>
+                <div class="stat-label">Guests (Accepted)</div>
             </div>
         </div>
 
@@ -365,7 +429,41 @@
                 <option value="maybe">Maybe</option>
             </select>
             <button class="btn btn-refresh" id="refreshBtn">Refresh</button>
-            <button class="btn btn-export" id="exportBtn">Export CSV</button>
+            <button class="btn btn-export" id="exportBtn">Export CSV (Accepted)</button>
+            <button class="btn btn-add" id="addManualBtn">+ Add Manually</button>
+        </div>
+
+        <!-- Manual Entry Form -->
+        <div class="manual-form-wrapper hidden" id="manualFormWrapper">
+            <form class="manual-form" id="manualForm">
+                <h3>Add RSVP Manually</h3>
+                <div class="form-grid">
+                    <input type="text" name="fullName" placeholder="Full Name *" required>
+                    <input type="email" name="email" placeholder="Email">
+                    <input type="tel" name="phone" placeholder="Phone">
+                    <select name="attending">
+                        <option value="yes">Attending</option>
+                        <option value="no">Declined</option>
+                        <option value="maybe">Maybe</option>
+                    </select>
+                    <select name="adults" required>
+                        <option value="1">1 Adult</option>
+                        <option value="2">2 Adults</option>
+                        <option value="3">3 Adults</option>
+                        <option value="4">4 Adults</option>
+                        <option value="5">5+ Adults</option>
+                    </select>
+                    <select name="children">
+                        <option value="0">0 Children</option>
+                        <option value="1">1 Child</option>
+                        <option value="2">2 Children</option>
+                        <option value="3">3 Children</option>
+                        <option value="4">4+ Children</option>
+                    </select>
+                    <textarea name="message" placeholder="Message (optional)"></textarea>
+                </div>
+                <button type="submit" class="btn btn-submit">Add RSVP</button>
+            </form>
         </div>
 
         <div class="table-container">
@@ -387,6 +485,7 @@
                             <th>Kids</th>
                             <th>Message</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="rsvpTableBody"></tbody>
